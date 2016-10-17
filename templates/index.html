@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>הבוגר!</title>
-	</head>
-	
-	<body>
-		<img src="{{ url_for('static', filename='img/1.jpg') }}" width="100px" height="100px">
-		<h1>This is a Heading</h1>
-		<p>This is a paragraph.</p>
+<head>
+    <title>הבוגר!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="/static/js/main_form.js"></script>
+</head>
 
-	</body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+            <p>Today's welcome message is:</p>
+            <h1>{{'{{myWelcome}}'}}</h1>
+
+        </div>
+
+    <body>
+    <img src="{{ url_for('static', filename='img/1.jpg') }}" width="100px" height="100px">
+    <h1>{{ name }}</h1>
+    <p>This is a paragraph.</p>
+
+    </body>
 </html>
 
