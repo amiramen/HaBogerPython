@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>הבוגר!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope, $http) {
+            $scope.categories = [
+                  {
+                    title: 'Computers',
+                    categories: [
+                      {
+                        title: 'Laptops',
+                        categories: [
+                          {
+                            title: 'Ultrabooks'
+                          },
+                          {
+                            title: 'Macbooks'
+                          }
+                        ]
+                      },
+                      {
+                        title: 'Desktops'
+                      },
+                      {
+                        title: 'Tablets',
+                        categories: [
+                          {
+                            title: 'Apple'
+                          },
+                          {
+                            title: 'Android'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    title: 'Printers'
+                  }
+                ];
+            $scope.fields = [
+                    {
+                        field_title: "First Name",
+                        field_value: "Jhon",
+                        field_type: "text",
+                        field_description: "The name of the person"
+                    },
+                    {
+                        field_title: "Resume",
+                        field_value: [
+                                {
+                                 title: ""
+                                }
+                                ],
+                        field_type: "detailed_rows",
+                        field_description: "The name of the person"
+                    }
+                ];
+            $scope.typeOf = function(obj){
+                    if (Array.isArray(obj)){
+                        return 'list';
+                    }
+                    return typeof(obj);
+                };
+            $scope.tree2 = {
+                "First Name" : "Jhon",
+                "Last Name" : "Snow",
+                "Resume": { "First Year": "Collage", "Second Year" : "Bla Bla" },
+                "Children": ["tomer", "ayelet", "aviel"]
+            };
+            // TODO HERE: Connect with /get_form_data/ to get data from mongoDB
+
+        });
+    </script>
+
+    <script type="text/ng-template" id="treeTest">
+            <text ng-if="typeOf(key) !='number'">{{ key }}: </text>
+
+            <text ng-if="typeOf(value) =='string'"> {{ value }}</text>
+
+            <ul ng-if="typeOf(value) =='object'">
+                    <li ng-repeat="(key, value) in value" ng-include="'treeTest'"></li>
+            </ul>
+
+            <ol ng-if="typeOf(value) =='list'">
+                    <li ng-repeat="(key, value) in value" ng-include="'treeTest'"></li>
+            </ol>
+    </script>
+</head>
+
+<body ng-controller="myCtrl">
+        <ul>
+            <li ng-repeat="(key, value) in tree" ng-include="'treeTest'"></li>
+        </ul>
+    </body>
+</html>
+

@@ -19,14 +19,9 @@ def hello(name=None):
 
 @app.route('/get_form_data/')
 def get_form_data():
-    try:
-        a = mongo.db.restaurants.find_one()
-        b = bson.json_util.dumps(a)
-    except :
-        print "hey"
-        raise
-    #json.loads(aJsonString, object_hook=json_util.object_hook)
-    return b
+    query_result = mongo.db.restaurants.find().limit(5)
+    json_serialized_response = bson.json_util.dumps(query_result)
+    return json_serialized_response
 
 
 if __name__ == "__main__":
